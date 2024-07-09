@@ -1,0 +1,91 @@
+
+#example2 td span {
+  margin: 0; /* Loại bỏ lề của span */
+  display: block; /* Thay đổi từ inline thành block để ôm chặt nội dung */
+}
+#selected-images{
+  float: left;
+  display: flex;
+}
+.selected-image{
+  /* border: 1px solid #bfbfbf; */
+  padding: 10px;
+  margin: 10px 10px 0 0;
+}
+
+td p{
+  height: 100px;
+  overflow-y: scroll;
+}
+
+form.delete{
+  display: inline;
+}
+
+thead{
+ background: #f2f2f2;
+}
+
+
+a.nav-link{
+  color: black;
+}
+a.nav-link:hover{
+  text-decoration:underline;
+}
+
+.navbar-nav li{
+  margin-right: 20px;
+}
+
+table strong{
+  min-width: 110px;
+  display: inline-block;
+}
+td.table-center.checkbox-status {
+  width: 90px;
+}
+.table-center{
+  text-align: center;
+}
+.table-center input{
+  transform: scale(1.4);
+}
+table.dataTable>thead>tr>th:not(.sorting_disabled), table.dataTable>thead>tr>td:not(.sorting_disabled) {
+  padding-right: 12px !important;
+}
+p.text-danger.message {
+  font-size: 14px;
+}
+.img-user{
+  width: 128px;
+  height: 128px;
+}
+
+.bootstrap-switch-container{
+  width: 111.8px !important;
+}
+
+
+.filter .form-control{
+  max-width: 200px;
+}
+
+.pst-ab{
+  position: absolute;
+}
+.btn-add{
+  bottom: 70px;
+  left: 860px;
+}
+
+.btn-add button.btn.btn-success {
+  font-size: 20px;
+  padding: 5px 20px;
+}
+span.select2-selection.select2-selection--single{
+  height: 37px !important;
+}
+span.select2.select2-container.select2-container--default{
+  line-height: 36px !important;
+}
