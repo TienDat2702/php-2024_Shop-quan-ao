@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +33,15 @@ Route::middleware(['auth.admin'])->group(function () {
 Route::group(['prefix' => 'user', 'middleware' => 'auth.admin'], function () {
     Route::get('index', [UserController::class, 'index'])->name('user.index');
     Route::get('create', [UserController::class, 'create'])->name('user.create');
+    Route::post('store', [UserController::class, 'store'])->name('user.store');
+    Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
     //AJAX
     Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.getLocation');
+    Route::post('ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
 });
 
 
