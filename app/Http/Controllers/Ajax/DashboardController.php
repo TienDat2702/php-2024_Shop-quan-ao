@@ -5,15 +5,14 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\UserServiceInterface as UserService;
 
 class DashboardController extends Controller
 {
-    public $userService;
+
     public function __construct(
-        UserService $userService
+
     ){
-        $this->userService = $userService;
+
     }
 
     public function changeStatus(Request $request){
@@ -24,6 +23,7 @@ class DashboardController extends Controller
             $serviceInstance = app($serviceInterfaceNameSpace);
         }
 
-        $serviceInstance->updateStatus($post);
+        $flat = $serviceInstance->updateStatus($post);
+        return response()->json(['flag' => $flat]);
     }
 }

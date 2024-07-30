@@ -6,7 +6,7 @@
         <!-- Content Header (Page header) -->
         @include('Backend.dashboard.component.content_header')
         <!-- /.content-header -->
-
+        
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -20,6 +20,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
+                                            @include('Backend.user.component.toolbox')
                                             @include('Backend.user.component.filter')
                                             @include('Backend.user.component.table')
                                         </div>

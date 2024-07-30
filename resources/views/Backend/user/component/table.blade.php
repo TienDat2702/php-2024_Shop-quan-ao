@@ -1,7 +1,7 @@
 <table id="user" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="user_info">
     <thead>
         <tr>
-            <th style="width: 3%" class="table-center" style="width: 10px"><input type="checkbox"></th>
+            <th style="width: 3%" class="table-center" style="width: 10px"><input type="checkbox" id="checkAll"></th>
             <th style="width: 7%" class="sorting table-center" tabindex="0">Ảnh</th>
             <th style="width: 15%" class="sorting table-center" tabindex="0">Họ và tên</th>
             <th style="width: 15%" class="sorting table-center" tabindex="0"> Email</th>
@@ -14,7 +14,7 @@
     <tbody>
         @foreach ($users as $item)
             <tr>
-                <td class="table-center"><input type="checkbox"></td>
+                <td class="table-center"><input type="checkbox" class="checkBoxItem"></td>
                 <td class="img-user"><img class="img-fluid" src="{{ asset('Backend/img/user1.png') }}" alt="">
                 </td>
                 <td> {{ $item->name }} </td>
@@ -26,8 +26,6 @@
                     <input class="status" type="checkbox" name="publish" value="{{ $item->publish }}" data-model="User" data-modelId="{{ $item->id}}" data-field="publish"
                         {{ $item->publish == 1 ? 'checked' : '' }} data-bootstrap-switch data-off-color="danger"
                         data-on-color="success">
-                        {{-- <input class="status" type="checkbox" name="publish" value="{{ $item->publish }}" data-model="User" data-field="publish"
-                        {{ $item->publish == 1 ? 'checked' : '' }} > --}}
                 </td>
 
                 <td class="table-center checkbox-status">

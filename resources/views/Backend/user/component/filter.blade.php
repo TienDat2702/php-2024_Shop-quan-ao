@@ -13,6 +13,18 @@
             </div>
             <div class="action">
                 <div class="d-flex align-items-center action-content justify-content-between">
+                    <div class="ibox-tools mx-4">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Publish <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li class="px-5 py-2"><a href="#" class="changeStatusAllon" data-field="publish" data-model="User" data-value="1">Config
+                                    option 1</a>
+                            </li>
+                            <li class="px-5 py-2"><a href="#" class="changeStatusAllOff" data-field="publish" data-model="User" data-value="1">Config
+                                    option 2</a>
+                            </li>
+                        </ul>
+                    </div>
                     <select name="user_catalogue_id" class="form-control mr-10 setupSelect2 select-user" id="">
                         <option value="0" selected="selected">Chọn nhóm thành viên</option>
                         <option value="1">Quản trị viên</option>

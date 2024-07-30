@@ -92,10 +92,21 @@ class Userservice implements UserserviceInterface
 
 
     public function updateStatus($post = []) {
-        $payload = [
-            $post['field'] => (($post['value'] == 1) ? 0 : 1), 
-        ];
+        
 
-        dd($payload);
+        DB::beginTransaction();
+        try { 
+
+            $payload[$post['field']] = (($post['value'] == 1) ? 0 : 1);
+
+            $user = $this->userRepository->update($post['modelId'],$payload);
+            DB::commit(); // nếu đúng insert vào database
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack(); // nếu insert không thành công thì rollback lại csdl
+            echo $e->getMessage();
+            die();
+            return false;
+        }
     }
 }

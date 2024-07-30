@@ -102,3 +102,15 @@ span.select2.select2-container.select2-container--default{
 .action-content{
   font-size: 15px;
 }
+
+.active-bg{
+  background-color: #dff3ff !important;
+}
+
+.ibox-tools a{
+    color: #444;
+}
+.ibox-tools ul li:hover{
+  background-color: #c2c2c2;
+  transition: 0.5s;
+}

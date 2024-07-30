@@ -30,7 +30,8 @@ class User extends Authenticatable
         'image',
         'description',
         'phone',
-        'user_catalogue_id'
+        'user_catalogue_id',
+        'publish'
     ];
 
     /**
