@@ -21,6 +21,9 @@ interface BaseRepositoryInterface
         array $column = ['*'],
         array $condition = [],
         array $join = [],
-        int $perpage = 10
+        int $perpage = 20,
+        array $relations = []
     );
+
+    public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = []);
 }

@@ -2,52 +2,46 @@
 
 namespace App\Services;
 
-use App\Services\Interfaces\UserserviceInterface;
-use App\Repositories\Interfaces\UserRepositoryInterface as UserRepository;
+use App\Services\Interfaces\UserCatalogueServiceInterface;
+use App\Repositories\Interfaces\UserCatalogueRepositoryInterface as UserCatalogueRepository;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 /**
- * Class Userservice
+ * Class UserCatalogueService
  * @package App\Services
  */
-class Userservice implements UserserviceInterface
+class UserCatalogueService implements UserCatalogueServiceInterface
 {
-    protected $userRepository;
+    protected $userCatalogueRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserCatalogueRepository $userCatalogueRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->userCatalogueRepository = $userCatalogueRepository;
     }
 
-    public function paginate($request, $deleted = false){
+    public function paginate($request){
         $condition['keyword'] = addslashes($request->input('keyword'));
         $condition['publish'] = $request->input('publish');
-        $condition['user_catalogue_id'] = $request->input('user_catalogue_id');
-        $condition['userDeleted'] = $request->input('userDeleted');
         $select = [
             'id',
-            'phone',
-            'email',
-            'address',
             'name',
+            'description',
             'publish',
-            'deleted_at',
         ];
+        $relations = ['users'];
         $perpage = $request->integer('perpage');
-        // dd($perpage);
-        $users = $this->userRepository->pagination($select, $condition, [], $perpage, $deleted); 
-        return $users;
+        $userCatalogues = $this->userCatalogueRepository->pagination($select, $condition, [], $perpage, $relations);
+        // dd($userCatalogues);
+        return $userCatalogues;
     }
     public function create($request)
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send', 're_password']);
-            $payload['birthday'] = $this->converBirthdayDate($payload['birthday']);
-            $payload['password'] = Hash::make($payload['password']);
-            $user = $this->userRepository->create($payload);
+            $payload = $request->except(['_token', 'send']);
+            $user = $this->userCatalogueRepository->create($payload);
             DB::commit(); // nếu đúng insert vào database
             return true;
         } catch (\Exception $e) {
@@ -63,8 +57,7 @@ class Userservice implements UserserviceInterface
         try {
             
             $payload = $request->except(['_token', 'send']);
-            $payload['birthday'] = $this->converBirthdayDate($payload['birthday']);
-            $user = $this->userRepository->update($id,$payload);
+            $user = $this->userCatalogueRepository->update($id,$payload);
             DB::commit(); // nếu đúng insert vào database
             return true;
         } catch (\Exception $e) {
@@ -79,7 +72,7 @@ class Userservice implements UserserviceInterface
         DB::beginTransaction();
         try {
 
-            $user = $this->userRepository->delete($id);
+            $user = $this->userCatalogueRepository->delete($id);
             DB::commit(); // nếu đúng insert vào database
             return true;
         } catch (\Exception $e) {
@@ -104,7 +97,7 @@ class Userservice implements UserserviceInterface
 
             $payload[$post['field']] = (($post['value'] == 1) ? 0 : 1);
 
-            $user = $this->userRepository->update($post['modelId'],$payload);
+            $user = $this->userCatalogueRepository->update($post['modelId'],$payload);
             DB::commit(); // nếu đúng insert vào database
             return true;
         } catch (\Exception $e) {
@@ -121,7 +114,7 @@ class Userservice implements UserserviceInterface
 
             $payload[$post['field']] = $post['value'];
 
-            $this->userRepository->updateByWhereIn($post['modelId'],$payload);
+            $this->userCatalogueRepository->updateByWhereIn($post['modelId'],$payload);
             
             DB::commit(); // nếu đúng insert vào database
             return true;

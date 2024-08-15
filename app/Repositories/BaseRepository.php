@@ -23,15 +23,25 @@ class BaseRepository implements BaseRepositoryInterface
         array $column = ['*'],
         array $condition = [],
         array $join = [],
-        int $perpage = 10
-    ){
-        $query = $this->model->select($column)->orderBy('id','desc')->where(function($query) use ($condition){
-            if( isset($condition['keyword']) && !empty($condition['keyword'])){
+        int $perpage = 20,
+        array $relations = []
+    ) {
+        $query = $this->model->select($column)->orderBy('id', 'desc')->where(function ($query) use ($condition) {
+            if (isset($condition['keyword']) && !empty($condition['keyword'])) {
                 $query->where('name', 'LIKE', '%' . $condition['keyword'] . '%');
                 //SELECT * FROM table_name WHERE name LIKE '%keyword%';
             }
-        })->orderBy('id','desc');
-        if(!empty($join)){
+        });
+        
+        if (isset($relations) && !empty($relations)) {
+            echo 123; die();
+            dd($relations);
+            foreach ($relations as $relation) {
+                $query->withCount($relation);
+            }
+        }
+
+        if (!empty($join)) {
             $query->join(...$join);
         }
         return $query->paginate($perpage);
@@ -42,15 +52,22 @@ class BaseRepository implements BaseRepositoryInterface
         $model = $this->model->create($payload);
         return $model->fresh();
     }
+
     public function update(int $id = 0, array $payload = [])
     {
         $model = $this->findById($id);
         return $model->update($payload);
     }
+
+    public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = []){
+        return $this->model->whereIn($whereInField, $whereIn)->update($payload);
+    }
+
     public function delete(int $id = 0)
     {
         return $this->findById($id)->delete();
     }
+
     public function forceDelete(int $id = 0)
     {
         return $this->findById($id)->forceDelete();

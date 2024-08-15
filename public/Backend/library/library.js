@@ -21,7 +21,7 @@
             }
 
             $.ajax({
-                url: 'ajax/dashboard/changeStatus',
+                url: '/ajax/dashboard/changeStatus',
                 type: 'POST',
                 data: option,
                 dataType: 'json',
@@ -44,27 +44,78 @@
 
                 $('.checkBoxItem').each(function () {
                     let _this = $(this);
-                    if (_this.prop('checked')) {
-                        _this.closest('tr').addClass('active-bg'); // .closest('tr') sẽ trả về phần tử <tr> gần nhất bao quanh checkbox với lớp checkBoxItem.
-                    } else {
-                        _this.closest('tr').removeClass('active-bg');
-                    }
+                    HT.changeBackground(_this);
                 })
+                HT.toggleIboxTools();
             })
         }
     }
 
     HT.checkBoxItem = () => {
         if ($('.checkBoxItem').length) {
-            $(document).on('click', '.checkBoxItem', function(){
+            $(document).on('click', '.checkBoxItem', function () {
                 let _this = $(this);
-                let isChecked = _this.prop('checked');
-                
-                if (isChecked) {
-                    _this.closest('tr').addClass('active-bg');
-                } else {
-                    _this.closest('tr').removeClass('active-bg');                
+                HT.changeBackground(_this);
+                HT.allChecked();
+                HT.toggleIboxTools();
+            })
+        }
+    }
+
+    HT.toggleIboxTools = () => {
+        if ($('.checkBoxItem:checked').length > 0) {
+            $('.ibox-tools').css('display', 'block');
+        } else {
+            $('.ibox-tools').css('display', 'none');
+        }
+    }
+
+    HT.changeBackground = (object) => {
+        let isChecked = object.prop('checked')
+        if (isChecked) {
+            object.closest('tr').addClass('active-bg')
+        } else {
+            object.closest('tr').removeClass('active-bg')
+        }
+    }
+
+    HT.allChecked = () => {
+        let allChecked = $('.checkBoxItem:checked').length === $('.checkBoxItem').length
+        $('#checkAll').prop('checked', allChecked)
+    }
+
+    HT.changeStatusAll = () => {
+        if ($('.changeStatusAll').length) {
+            $(document).on('click', '.changeStatusAll', function () {
+                let _this = $(this)
+                let id = []
+                $('.checkBoxItem').each(function () {
+                    let checkBox = $(this)
+                    if (checkBox.prop('checked')) {
+                        id.push(checkBox.val())
+                    }
+                })
+                let option = {
+                    'value': _this.attr('data-value'),
+                    'id': id,
+                    'model': _this.attr('data-model'),
+                    'field': _this.attr('data-field'),
+                    '_token': _token
                 }
+
+                $.ajax({
+                    url: '/ajax/dashboard/changeStatusAll',
+                    type: 'POST',
+                    data: option,
+                    dataType: 'json',
+                    success: function (res) {
+    
+                        console.log(res);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log('Lỗi: ' + textStatus + '' + errorThrown);
+                    }
+                });
             })
         }
     }
@@ -74,5 +125,6 @@
         HT.changeStatus();
         HT.checkAll();
         HT.checkBoxItem();
+        HT.changeStatusAll();
     })
 })(jQuery);

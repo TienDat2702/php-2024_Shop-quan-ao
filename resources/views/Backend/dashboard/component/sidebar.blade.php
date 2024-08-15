@@ -54,13 +54,13 @@
               <li class="nav-item">
                 <a href=" {{ route('user.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Quản lý nhóm thành viên</p>
+                  <p>Quản lý thành viên</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a href="{{ route('user.catalogue.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Quản lý thành viên</p>
+                  <p>Quản lý nhóm thành viên</p>
                 </a>
               </li>
             </ul>

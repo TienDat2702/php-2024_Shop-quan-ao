@@ -26,4 +26,14 @@ class DashboardController extends Controller
         $flat = $serviceInstance->updateStatus($post);
         return response()->json(['flag' => $flat]);
     }
+    public function changeStatusAll(Request $request){
+        $post = $request->input();
+        $serviceInterfaceNameSpace = '\App\Services\\' . ucfirst($post['model']) . 'Service';
+        if (class_exists($serviceInterfaceNameSpace)) {
+            $serviceInstance = app($serviceInterfaceNameSpace);
+        }
+
+        $flat = $serviceInstance->updateStatusAll($post);
+        return response()->json(['flag' => $flat]);
+    }
 }

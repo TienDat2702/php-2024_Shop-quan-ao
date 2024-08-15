@@ -33,14 +33,20 @@ class UserController extends Controller
     {
 
         $users = $this->userService->paginate($request);
-        return view('Backend.user.index', compact('users'));
+        return view('Backend.user.user.index', compact('users'));
+    }
+    public function userDeleted(Request $request)
+    {
+
+        $users = $this->userService->paginate($request, false);
+        return view('Backend.user.user.userDeleted', compact('users'));
     }
 
     public function create()
     {
         $config = 'create';
         $provinces = $this->provinceReposity->all();
-        return view('Backend.user.store', compact('provinces', 'config'));
+        return view('Backend.user.user.store', compact('provinces', 'config'));
     }
 
     public function store(StoreUserRequest $request)
@@ -56,7 +62,7 @@ class UserController extends Controller
         $config = 'edit';
         $user = $this->userRepository->findById($id);
         $provinces = $this->provinceReposity->all();
-        return view('Backend.user.store', compact('provinces', 'user', 'config'));
+        return view('Backend.user.user.store', compact('provinces', 'user', 'config'));
     }
 
     public function update($id, UpdateUserRequest $request){
@@ -68,7 +74,7 @@ class UserController extends Controller
 
     public function delete($id){
         $user = $this->userRepository->findById($id);
-        return view('Backend.user.delete', compact('user'));
+        return view('Backend.user.user.delete', compact('user'));
     }
     
     public function destroy($id){

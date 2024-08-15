@@ -5,6 +5,7 @@ use App\Http\Controllers\Ajax\LocationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\UserCatalogueController;
 use App\Http\Controllers\Backend\UserController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -32,6 +33,7 @@ Route::middleware(['auth.admin'])->group(function () {
 // USER
 Route::group(['prefix' => 'user', 'middleware' => 'auth.admin'], function () {
     Route::get('index', [UserController::class, 'index'])->name('user.index');
+    Route::get('userDeleted', [UserController::class, 'userDeleted'])->name('user.userDeleted');
     Route::get('create', [UserController::class, 'create'])->name('user.create');
     Route::post('store', [UserController::class, 'store'])->name('user.store');
     Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit');
@@ -39,9 +41,23 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth.admin'], function () {
     Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
     Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
-    //AJAX
-    Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.getLocation');
-    Route::post('ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
+});
+
+//AJAX
+Route::post('ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
+Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.getLocation');
+Route::post('ajax/dashboard/changeStatusAll', [AjaxDashboardController::class, 'changeStatusAll'])->name('ajax.dashboard.changeStatusAll');
+
+// USER CATALOGUE
+Route::group(['prefix' => 'user/catalogue', 'middleware' => 'auth.admin'], function () {
+    Route::get('index', [UserCatalogueController::class, 'index'])->name('user.catalogue.index');
+    Route::get('userDeleted', [UserCatalogueController::class, 'userDeleted'])->name('user.catalogue.userDeleted');
+    Route::get('create', [UserCatalogueController::class, 'create'])->name('user.catalogue.create');
+    Route::post('store', [UserCatalogueController::class, 'store'])->name('user.catalogue.store');
+    Route::get('edit/{id}', [UserCatalogueController::class, 'edit'])->name('user.catalogue.edit');
+    Route::post('update/{id}', [UserCatalogueController::class, 'update'])->name('user.catalogue.update');
+    Route::get('delete/{id}', [UserCatalogueController::class, 'delete'])->name('user.catalogue.delete');
+    Route::delete('destroy/{id}', [UserCatalogueController::class, 'destroy'])->name('user.catalogue.destroy');
 });
 
 

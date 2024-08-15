@@ -3,10 +3,10 @@
 namespace App\Services\Interfaces;
 
 /**
- * Interface UserserviceInterface
+ * Interface UserCatalogueServiceInterface
  * @package App\Services\Interfaces
  */
-interface UserserviceInterface
+interface UserCatalogueServiceInterface
 {
     public function paginate($request);
     public function create($request);

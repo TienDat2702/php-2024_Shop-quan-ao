@@ -1,0 +1,16 @@
+Transaction: 
+* DB::beginTransaction():
+
+Khi phương thức này được gọi, Laravel sẽ bắt đầu một giao dịch cơ sở dữ liệu.
+Trong khoảng thời gian từ khi bắt đầu giao dịch đến khi kết thúc, mọi thao tác cơ sở dữ liệu (như INSERT, UPDATE, DELETE) đều không được thực sự thực hiện cho đến khi giao dịch được cam kết (commit).
+
+
+* DB::commit():
+
+Khi bạn gọi DB::commit(), tất cả các thao tác cơ sở dữ liệu được thực hiện trong giao dịch sẽ được xác nhận và thực sự áp dụng vào cơ sở dữ liệu.
+Điều này có nghĩa là nếu tất cả các thao tác đều thành công, dữ liệu sẽ được lưu trữ vĩnh viễn trong cơ sở dữ liệu.
+
+* DB::rollBack():
+
+Nếu có bất kỳ lỗi nào xảy ra trong quá trình thực hiện các thao tác cơ sở dữ liệu, bạn có thể gọi DB::rollBack() để hủy bỏ tất cả các thay đổi đã thực hiện trong giao dịch đó.
+Điều này đảm bảo rằng nếu có bất kỳ vấn đề gì xảy ra, dữ liệu của bạn sẽ không bị ảnh hưởng và sẽ trở về trạng thái ban đầu trước khi giao dịch bắt đầu

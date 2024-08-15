@@ -1,5 +1,5 @@
 @extends('Backend.dashboard.layout')
-@section('title', 'Quản lý thành viên')
+@section('title', 'Quản lý nhóm thành viên')
 @section('content')
     <div class="content-wrapper">
         
@@ -20,9 +20,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            @include('Backend.user.component.toolbox')
-                                            @include('Backend.user.component.filter')
-                                            @include('Backend.user.component.table')
+                                            @include('Backend.user.catalogue.component.filter')
+                                            @include('Backend.user.catalogue.component.table')
                                         </div>
                                     </div>
 
@@ -50,6 +49,8 @@
 @endsection
 
 @section('script')
+  <!-- Select2 -->
+    <script src="{{ asset('Backend/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('Backend/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('Backend/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('Backend/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -64,8 +65,6 @@
     <script src="{{ asset('Backend/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
     {{------------- switch ------------}}
-    <!-- Select2 -->
-    <script src="{{ asset('Backend/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- Bootstrap4 Duallistbox -->
     <script src="{{ asset('Backend/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
     <!-- InputMask -->
@@ -87,10 +86,4 @@
     })
     </script>
     {{------------- end switch ------------}}
-
-    <script>
-        var province_id = '{{ isset($user->province_id) ? $user->province_id : old('province_id') }}'
-        var district_id = '{{ isset($user->district_id) ? $user->district_id : old('district_id') }}'
-        var ward_id = '{{ isset($user->ward_id) ? $user->ward_id : old('ward_id') }}'
-    </script>
 @endsection

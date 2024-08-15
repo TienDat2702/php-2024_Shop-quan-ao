@@ -14,7 +14,7 @@
     <tbody>
         @foreach ($users as $item)
             <tr>
-                <td class="table-center"><input type="checkbox" class="checkBoxItem"></td>
+                <td class="table-center"><input type="checkbox" value="{{ $item->id }}" class="checkBoxItem"></td>
                 <td class="img-user"><img class="img-fluid" src="{{ asset('Backend/img/user1.png') }}" alt="">
                 </td>
                 <td> {{ $item->name }} </td>

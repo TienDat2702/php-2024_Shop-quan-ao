@@ -6,13 +6,13 @@ namespace App\Repositories\Interfaces;
  * Interface UserserviceInterface
  * @package App\Services\Interfaces
  */
-interface UserRepositoryInterface
+interface UserCatalogueRepositoryInterface
 {
     public function create();
     public function update(int $id);
     public function findById(int $id);
     public function delete(int $id);
-    public function pagination(
+     public function pagination(
         array $column = ['*'],
         array $condition = [],
         array $join = [],

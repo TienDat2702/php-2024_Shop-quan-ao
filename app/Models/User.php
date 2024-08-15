@@ -18,6 +18,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    
     protected $fillable = [
         'name',
         'email',
@@ -53,4 +54,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function user_catalogues(){
+        $this->belongsTo(UserCatalogue::class, 'user_catalogue_id', 'id');
+    }
 }
