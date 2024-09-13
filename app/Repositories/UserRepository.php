@@ -24,7 +24,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         array $condition = [],
         array $join = [],
         int $perpage = 20,
-        bool $deleted = false
+        array $relation = [],
     ) {
 
         $query = $this->model->select($column)->orderBy('id', 'desc')
@@ -36,16 +36,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                       ->orwhere('address', 'LIKE', '%' . $condition['keyword'] . '%');
                 //SELECT * FROM table_name WHERE name LIKE '%keyword%';
             }
-            if (isset($condition['publish']) && $condition['publish'] != -1) {
+            if (isset($condition['publish']) && $condition['publish'] != 0) {
                 $query->where('publish', '=', $condition['publish']);
             }
             if (isset($condition['user_catalogue_id']) && $condition['user_catalogue_id'] != 0) {
                 $query->where('user_catalogue_id', '=', $condition['user_catalogue_id']);
             }
-            if (isset($condition['userDeleted']) && $condition['userDeleted'] == 1) {
-                $query->whereNotNull('deleted_at');
-            }
-        });
+        })->with('user_catalogues');
         if (!empty($join)) {
             $query->join(...$join);
         }

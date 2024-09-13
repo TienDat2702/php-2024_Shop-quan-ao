@@ -26,8 +26,11 @@
                 data: option,
                 dataType: 'json',
                 success: function (res) {
-
-                    console.log(res);
+                    let inputValue = ((option.value == 1) ? 2 : 1)
+                    if( res.flag == true ){
+                        _this.val(inputValue)
+                    }
+                
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log('Lỗi: ' + textStatus + '' + errorThrown);

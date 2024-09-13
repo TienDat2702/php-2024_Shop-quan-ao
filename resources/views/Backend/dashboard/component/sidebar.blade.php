@@ -34,37 +34,44 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="{{ route('dashboard.index') }}" class="nav-link active">
+          <li class="nav-item">
+            <a href="{{ route('dashboard.index') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Quản lý thành viên
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href=" {{ route('user.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Quản lý thành viên</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('user.catalogue.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Quản lý nhóm thành viên</p>
-                </a>
-              </li>
-            </ul>
+          @php
+              $segment1 = request()->segment(1); // segment là từ chữ sau '/'
+              $segment2 = request()->segment(2); // segment là từ chữ sau '/'
+          @endphp
+          @foreach (config('module.module') as $key => $val)
+            <li class="nav-item {{ ($segment1 == $val['name']) ? 'menu-open' : '' }}">
+              <a href="#" class="nav-link {{ ($segment1 == $val['name']) ? 'active' : '' }}">
+                <i class="{{ $val['icon'] }}"></i>
+                <p>
+                  {{ $val['title'] }}
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              @if (isset($val['supModule']))
+                <ul class="nav nav-treeview">
+                  @foreach ($val['supModule'] as $module)
+                    <li class="nav-item">
+                      <a href=" {{ route($module['route']) }}"class="nav-link 
+                      {{ ($segment2 == $module['name'] && $segment1 == $val['name']) ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>{{ $module['title'] }}</p>
+                      </a>
+                    </li>
+                  @endforeach
+                </ul>
+              @endif
+              
           </li>
+          @endforeach
+          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

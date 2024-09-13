@@ -18,7 +18,7 @@ class DashboardController extends Controller
     public function changeStatus(Request $request){
         $post = $request->input();
         // dd($post);
-        $serviceInterfaceNameSpace = '\App\Services\\' . ucfirst($post['model']) . 'Service';
+        $serviceInterfaceNameSpace = '\App\Services\\' . ucfirst($post['model']) . 'Service'; //ucfirst chuyển đổi chữ đầu tiên trong chữ là chữ hoa
         if (class_exists($serviceInterfaceNameSpace)) {
             $serviceInstance = app($serviceInterfaceNameSpace);
         }
@@ -28,7 +28,7 @@ class DashboardController extends Controller
     }
     public function changeStatusAll(Request $request){
         $post = $request->input();
-        $serviceInterfaceNameSpace = '\App\Services\\' . ucfirst($post['model']) . 'Service';
+        $serviceInterfaceNameSpace = '\App\Services\\' . ucfirst($post['model']) . 'Service'; 
         if (class_exists($serviceInterfaceNameSpace)) {
             $serviceInstance = app($serviceInterfaceNameSpace);
         }

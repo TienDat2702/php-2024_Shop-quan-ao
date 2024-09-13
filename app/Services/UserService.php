@@ -31,13 +31,14 @@ class Userservice implements UserserviceInterface
             'phone',
             'email',
             'address',
+            'user_catalogue_id',
             'name',
             'publish',
             'deleted_at',
         ];
         $perpage = $request->integer('perpage');
         // dd($perpage);
-        $users = $this->userRepository->pagination($select, $condition, [], $perpage, $deleted); 
+        $users = $this->userRepository->pagination($select, $condition, [], $perpage); 
         return $users;
     }
     public function create($request)
@@ -102,8 +103,7 @@ class Userservice implements UserserviceInterface
         DB::beginTransaction();
         try { 
 
-            $payload[$post['field']] = (($post['value'] == 1) ? 0 : 1);
-
+            $payload[$post['field']] = (($post['value'] == 1) ? 2 : 1);
             $user = $this->userRepository->update($post['modelId'],$payload);
             DB::commit(); // nếu đúng insert vào database
             return true;

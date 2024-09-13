@@ -17,11 +17,10 @@
                     </div>
                     <select name="publish" class="form-control mr-10 setupSelect2 select-user mx-2" id="">
                         @php
-                            $publishArray = ['Không hoạt động', 'Hoạt động'];
+                            
                             $publish = request('publish') ?: old('publish');
                         @endphp
-                        <option value="-1" selected="selected">Chọn tình trạng</option>
-                        @foreach ($publishArray as $key => $val)
+                        @foreach (Config('general.publish') as $key => $val)
                             <option {{ $publish == $key ? 'selected' : '' }} value="{{ $key }}">{{ $val }}</option>
                         @endforeach
                     </select>

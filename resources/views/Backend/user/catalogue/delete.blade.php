@@ -19,6 +19,7 @@
                                     <h4>Thông tin chung</h4>
                                 </div>
                                 <div class="pannel-description">
+                                    <p>Bạn có chắc chắn xóa nhóm thành viên: <span class="text-danger">{{ $userCatalogue->name }}</span></p>
                                     <strong>Lưu ý <span class="text-danger">(*)</span></strong>: Không thể khôi phục thành viên sau khi xóa, hãy chắc chắn bạn muốn thực hiện chức năng này!
                                 </div>
                             </div>

@@ -26,24 +26,30 @@ class BaseRepository implements BaseRepositoryInterface
         int $perpage = 20,
         array $relations = []
     ) {
+        // Khởi tạo query từ model
         $query = $this->model->select($column)->orderBy('id', 'desc')->where(function ($query) use ($condition) {
             if (isset($condition['keyword']) && !empty($condition['keyword'])) {
                 $query->where('name', 'LIKE', '%' . $condition['keyword'] . '%');
-                //SELECT * FROM table_name WHERE name LIKE '%keyword%';
+            }
+            if (isset($condition['publish']) && $condition['publish'] != 0) {
+                $query->where('publish', '=', $condition['publish']);
+                return $query;
             }
         });
-        
+
+        // Kiểm tra $relations và gọi withCount
         if (isset($relations) && !empty($relations)) {
-            echo 123; die();
-            dd($relations);
             foreach ($relations as $relation) {
                 $query->withCount($relation);
             }
         }
 
+        // Xử lý join nếu có
         if (!empty($join)) {
             $query->join(...$join);
         }
+
+        // Trả về kết quả phân trang
         return $query->paginate($perpage);
     }
 

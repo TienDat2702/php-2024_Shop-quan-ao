@@ -2,11 +2,11 @@
     <thead>
         <tr>
             <th style="width: 3%" class="table-center" style="width: 10px"><input type="checkbox" id="checkAll"></th>
-            <th style="width: 15%" class="sorting table-center" tabindex="0">Tên nhóm thành viên</th>
-            <th style="width: 10%" class="sorting table-center" tabindex="0">Số thành viên</th>
+            <th style="width: 10%" class="sorting table-center" tabindex="0">Tên nhóm thành viên</th>
+            <th style="width: 7%" class="sorting table-center" tabindex="0">Số thành viên</th>
             <th style="width: 10%" class="sorting table-center" tabindex="0"> Mô tả</th>
-            <th style="width: 10%" class="sorting table-center" tabindex="0"> Trạng thái</th>
-            <th style="width: 10%" class="sorting table-center" tabindex="0"> Thao tác</th>
+            <th style="width: 7%" class="sorting table-center" tabindex="0"> Trạng thái</th>
+            <th style="width: 7%" class="sorting table-center" tabindex="0"> Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -15,11 +15,11 @@
         <tr>
             <td class="table-center"><input type="checkbox" value="{{ $item->id }}" class="checkBoxItem"></td>
             <td> {{ $item->name }} </td>
-            <td> {{ $item->name }} </td>
+            <td class="text-center"> {{ $item->users_count }} người </td>
             <td> {{ $item->description }} </td>
             <td class="table-center checkbox-status">
-                <input class="status" type="checkbox" name="publish" value="{{ $item->publish }}" data-model="UserCatalogue" data-modelId="{{ $item->id}}" data-field="publish"
-                    {{ $item->publish == 1 ? 'checked' : '' }} data-bootstrap-switch data-off-color="danger"
+                <input class="status" type="checkbox" name="publish" value="{{ $item->publish }}" data-model="UserCatalogue" data-modelId="{{ $item->id }}" data-field="publish"
+                    {{ $item->publish == 2 ? 'checked' : '' }} data-bootstrap-switch data-off-color="danger"
                     data-on-color="success">
             </td>
 

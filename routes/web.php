@@ -60,6 +60,30 @@ Route::group(['prefix' => 'user/catalogue', 'middleware' => 'auth.admin'], funct
     Route::delete('destroy/{id}', [UserCatalogueController::class, 'destroy'])->name('user.catalogue.destroy');
 });
 
+// BLOG
+Route::group(['prefix' => 'post', 'middleware' => 'auth.admin'], function () {
+    Route::get('index', [UserController::class, 'index'])->name('post.index');
+    Route::get('postDeleted', [UserController::class, 'postDeleted'])->name('post.postDeleted');
+    Route::get('create', [UserController::class, 'create'])->name('post.create');
+    Route::post('store', [UserController::class, 'store'])->name('post.store');
+    Route::get('edit/{id}', [UserController::class, 'edit'])->name('post.edit');
+    Route::post('update/{id}', [UserController::class, 'update'])->name('post.update');
+    Route::get('delete/{id}', [UserController::class, 'delete'])->name('post.delete');
+    Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('post.destroy');
+
+});
+// BLOG CATALOGUE
+Route::group(['prefix' => 'post/catalogue', 'middleware' => 'auth.admin'], function () {
+    Route::get('index', [UserCatalogueController::class, 'index'])->name('post.catalogue.index');
+    Route::get('postDeleted', [UserCatalogueController::class, 'postDeleted'])->name('post.catalogue.postDeleted');
+    Route::get('create', [UserCatalogueController::class, 'create'])->name('post.catalogue.create');
+    Route::post('store', [UserCatalogueController::class, 'store'])->name('post.catalogue.store');
+    Route::get('edit/{id}', [UserCatalogueController::class, 'edit'])->name('post.catalogue.edit');
+    Route::post('update/{id}', [UserCatalogueController::class, 'update'])->name('post.catalogue.update');
+    Route::get('delete/{id}', [UserCatalogueController::class, 'delete'])->name('post.catalogue.delete');
+    Route::delete('destroy/{id}', [UserCatalogueController::class, 'destroy'])->name('post.catalogue.destroy');
+});
+
 
 
 Route::get('admin', [AuthController::class, 'index'])->name('auth.admin')->middleware('login');

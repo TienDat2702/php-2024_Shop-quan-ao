@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Services\Interfaces\UserCatalogueServiceInterface;
 use App\Repositories\Interfaces\UserCatalogueRepositoryInterface as UserCatalogueRepository;
+use App\Repositories\Interfaces\UserRepositoryInterface as UserRepository;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,10 +16,16 @@ use Illuminate\Support\Facades\Log;
 class UserCatalogueService implements UserCatalogueServiceInterface
 {
     protected $userCatalogueRepository;
+    protected $userRepository;
 
-    public function __construct(UserCatalogueRepository $userCatalogueRepository)
+    public function __construct(
+        UserCatalogueRepository $userCatalogueRepository,
+        UserRepository $userRepository
+
+    )
     {
         $this->userCatalogueRepository = $userCatalogueRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function paginate($request){
@@ -32,7 +39,9 @@ class UserCatalogueService implements UserCatalogueServiceInterface
         ];
         $relations = ['users'];
         $perpage = $request->integer('perpage');
-        $userCatalogues = $this->userCatalogueRepository->pagination($select, $condition, [], $perpage, $relations);
+        $userCatalogues = $this->userCatalogueRepository->pagination(
+            $select, $condition, [], $perpage, $relations
+        );
         // dd($userCatalogues);
         return $userCatalogues;
     }
@@ -95,9 +104,11 @@ class UserCatalogueService implements UserCatalogueServiceInterface
         DB::beginTransaction();
         try { 
 
-            $payload[$post['field']] = (($post['value'] == 1) ? 0 : 1);
+            $payload[$post['field']] = (($post['value'] == 1) ? 2 : 1);
 
             $user = $this->userCatalogueRepository->update($post['modelId'],$payload);
+
+            $this->changeUserStatus($post, $payload[$post['field']]);
             DB::commit(); // nếu đúng insert vào database
             return true;
         } catch (\Exception $e) {
@@ -123,6 +134,21 @@ class UserCatalogueService implements UserCatalogueServiceInterface
             echo $e->getMessage();
             die();
             return false;
+        }
+    }
+
+    public function changeUserStatus($post, $value){
+        DB::beginTransaction();
+        try {
+            $array = [];
+            if (isset($post['modelId'])) {
+                $array[] = $post['modelId'];
+            }
+            $payload[$post['field']] = $value;
+            $this->userRepository->updateByWhereIn('user_catalogue_id', $array, $payload);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
         }
     }
 }

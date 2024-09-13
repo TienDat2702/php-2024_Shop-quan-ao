@@ -56,6 +56,6 @@ class User extends Authenticatable
     ];
 
     public function user_catalogues(){
-        $this->belongsTo(UserCatalogue::class, 'user_catalogue_id', 'id');
+        return $this->belongsTo(UserCatalogue::class, 'user_catalogue_id', 'id');
     }
 }
